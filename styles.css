@@ -508,4 +508,151 @@
     from, to { opacity: 1; }
     50% { opacity: 0; }
   }
+  /* Fixed Avatar Styles with Visible Tech Bubbles */
+.avatar-wrapper {
+  position: absolute;
+  right: 10%;
+  bottom: 10%;
+  z-index: 10;
+  perspective: 1000px;
+}
+
+.avatar-container {
+  position: relative;
+  width: 220px;
+  height: 305px; /* Увеличили высоту для места под кружки */
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.avatar-img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--primary);
+  box-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  transform: translateZ(20px);
+  transition: all 0.5s ease;
+}
+
+.tech-bubbles {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  z-index: 4; /* Выше аватарки */
+  padding-top: 20px; /* Отступ от аватарки */
+}
+
+.bubble {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid white;
+  transform: scale(1); /* Теперь всегда видимы */
+  transition: all 0.4s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dark);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+/* Подсказки */
+.bubble::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background: var(--primary);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.bubble.html { background-color: #E34F26; }
+.bubble.css { background-color: #2965F1; }
+.bubble.js { background-color: #F7DF1E; }
+
+/* Hover Effects */
+.avatar-container:hover .avatar-img {
+  box-shadow: 0 0 50px rgba(139, 0, 0, 0.8);
+  filter: brightness(1.1);
+}
+
+.bubble:hover {
+  transform: scale(1.2) translateY(-5px);
+}
+
+.bubble:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-15px);
+}
+
+/* Анимация кружков */
+@keyframes floatBubble {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.bubble.html {
+  animation: floatBubble 3s infinite;
+}
+.bubble.css {
+  animation: floatBubble 3s infinite 0.5s;
+}
+.bubble.js {
+  animation: floatBubble 3s infinite 1s;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .avatar-wrapper {
+    position: static;
+    margin: 40px auto;
+    display: flex;
+    justify-content: center;
+  }
   
+  .avatar-container {
+    width: 180px;
+    height: 240px;
+  }
+  
+  .avatar-img {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .tech-bubbles {
+    gap: 20px;
+    padding-top: 15px;
+  }
+  
+  .bubble {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .bubble::after {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}
